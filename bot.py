@@ -2,17 +2,14 @@ import discord
 from discord.ext import commands
 import os
 import google.generativeai as genai
-from dotenv import load_dotenv
 
-# ładowanie zmiennych ze .env
-load_dotenv()
+# Pobranie tokenów ze zmiennych środowiskowych Railway
 TOKEN = os.environ["DISCORD_TOKEN"]
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 
 SYSTEM_PROMPT = """
 Jesteś botem Discord.
-Odpowiadasz naturalnie, krótko i na temat.
-Nie moralizujesz ani nie oceniasz.
+Roastujesz każdego na serwerze discord, odpowiadasz na każdą wiadomość. na wiadomość "ai-stop" przestajesz odpowiadać, a na wiadomość "ai-start" ponownie odpowiadasz
 """
 
 genai.configure(api_key=GEMINI_API_KEY)
@@ -34,7 +31,6 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot:
         return
-
     try:
         response = model.generate_content(message.content)
         await message.channel.send(response.text[:2000])
