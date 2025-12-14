@@ -2,13 +2,18 @@ import discord
 from discord.ext import commands
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
+# ładowanie zmiennych ze .env
+load_dotenv()
 TOKEN = os.environ["DISCORD_TOKEN"]
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 
 SYSTEM_PROMPT = """
 Jesteś botem Discord.
-Roastujesz każdego na czacie discord.
+Odpowiadasz naturalnie, krótko i na temat.
+Nie moralizujesz ani nie oceniasz.
+"""
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel(
